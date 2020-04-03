@@ -1,0 +1,26 @@
+# OpenShift Serverless Control Plane Scale Tests
+
+## Repo Layout
+
+`config/` is for Cluster Loader configs
+`content/` is for the content used by the configs
+
+
+## Running Cluster Loader Tests
+
+Make sure `oc` is logged in to the target test cluster. And ensure you
+have a valid OpenShift pull secret.
+
+From the root of this cloned git repo:
+
+```
+podman pull $(oc adm release info --image-for=tests) \
+  --authfile <path to your OpenShift pull secret json file>
+
+podman run -v ~/.kube/config:/root/.kube/config:z \
+  -v $(pwd):/root/serverless-scale/:z \
+  -i $(oc adm release info --image-for=tests) \
+  /bin/bash -c 'cd /root/serverless-scale && \
+  KUBECONFIG=/root/.kube/config VIPERCONFIG=/root/serverless-scale/config/1000-namespaces.yaml \
+  openshift-tests run-test "[Feature:Performance][Serial][Slow] Load cluster should load the cluster [Suite:openshift]"'
+```

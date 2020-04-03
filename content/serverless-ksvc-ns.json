@@ -1,0 +1,56 @@
+{
+  "kind": "Template",
+  "apiVersion": "template.openshift.io/v1",
+  "metadata": {
+    "name": "ksvcTemplate",
+    "creationTimestamp": null,
+    "annotations": {
+      "description": "This template will create a single Knative Service.",
+      "tags": ""
+    }
+  },
+  "objects": [
+    {
+      "kind": "Service",
+      "apiVersion": "serving.knative.dev/v1",
+      "metadata": {
+        "name": "ksvc${IDENTIFIER}"
+      },
+      "spec": {
+        "template": {
+          "spec": {
+            "containers": [
+              {
+                "image": "gcr.io/knative-samples/helloworld-go",
+                "env": [
+                  {
+                    "name": "TARGET",
+                    "value": "Go Sample v${IDENTIFIER}"
+                  }
+                ],
+                "resources": {
+                  "requests": {
+                    "cpu": "10m",
+                    "memory": "10M"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "status": {}
+    }
+  ],
+  "parameters": [
+    {
+      "name": "IDENTIFIER",
+      "description": "Number to append to the name of resources",
+      "value": "1",
+      "required": true
+    }
+  ],
+  "labels": {
+    "template": "ksvcTemplate"
+  }
+}
