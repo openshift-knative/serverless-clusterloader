@@ -31,7 +31,7 @@ podman run -v ~/.kube/config:/root/.kube/config:z \
   openshift-tests run-test "[Feature:Performance][Serial][Slow] Load cluster should load the cluster [Suite:openshift]"'
 ```
 
-# 2500 namespaces test
+### 2500 namespaces test
 
 ```
 podman run -v ~/.kube/config:/root/.kube/config:z \
