@@ -1,0 +1,19 @@
+provider: local 
+ClusterLoader:
+  cleanup: false
+  projects:
+  - num: 100
+    basename: serverless-ksvc-ns
+    tuning: default
+    ifexists: delete
+    templates:
+    - num: 10
+      file: ./content/serverless-ksvc-ns.json
+  tuningsets: 
+  - name: default
+    templates:
+      stepping: 
+        stepsize: 10
+        pause: 0 s
+      rate_limit: 
+        delay: 0 ms
